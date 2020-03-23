@@ -1,10 +1,10 @@
 # coding=utf-8
 
-import json
 import os
+import re
+
 import requests
 from bs4 import BeautifulSoup
-import re
 
 
 class Informatics(object):
@@ -212,7 +212,7 @@ class Informatics(object):
         :param string: Строка
         :return: Чистая строка
         """
-        return re.sub('[\r\t]', '',
+        return re.sub(r'[\r\t]', '',
                       string).replace('    ',
                                       '').replace('\n \n',
                                                   '\n').replace('\n\n',
@@ -302,10 +302,24 @@ class Informatics(object):
         problem['name'] = problem['full_name'].replace(
             'Задача №%i. ' % problem_id, '')
 
-        problem['description'] = self.str_cleaner(
-            tree.find('div', {
-                'class': 'legend'
-            }).contents[1].text)
+        desc_tree = tree.find('div', {
+            'class': 'legend'
+        })
+
+        # Эти ваши информатиксы меня совсем не впечатляют
+        if desc_tree:
+            desc_tree = desc_tree.contents
+            if len(desc_tree) >= 2:
+                problem['description'] = self.str_cleaner(desc_tree[1].text)
+            else:
+                for item in desc_tree:
+                    if len(item) > 14:
+                        problem['description'] = self.str_cleaner(str(item))
+                        break
+                else:
+                    problem['description'] = 'Не удалось получить описание'
+        else:
+            problem['description'] = 'Без описания'
 
         if not detailed:
             return problem

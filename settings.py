@@ -1,10 +1,11 @@
-import pyAesCrypt
-import pickle
-import base64
 import io
 import os
+import pickle
+
+import pyAesCrypt
 
 buffer = 65536
+
 
 class Settings(object):
     def __init__(self, username: str, password: str):

@@ -1,5 +1,4 @@
-import base64
-
+import argparse
 import os
 
 letters_list = [
@@ -13,12 +12,14 @@ letters_list = [
 def header(msg: str = ''):
     print('\n--- ' + msg.upper() + ' ---\n')
 
+
 def extend_list(_list, _range):
     for r in _range:
         start, end = r.split('-')
         for i in range(int(start), int(end) + 1):
             _list.append(i)
     return _list
+
 
 # в отдельную функцию, чтобы в редакторе можно было свернуть ;)
 def args_parser():
@@ -98,6 +99,7 @@ def args_parser():
     include.sort()
 
     return include, args.folder
+
 
 def clear():
     if os.name == 'nt':

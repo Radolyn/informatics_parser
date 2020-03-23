@@ -1,9 +1,10 @@
+import getpass
+import os
+import time
+
+import utils
 from informatics import Informatics
 from settings import Settings
-import utils
-import os
-import getpass
-import time
 
 utils.initialize()
 
