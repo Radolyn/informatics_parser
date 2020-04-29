@@ -30,20 +30,12 @@ def args_parser():
                             metavar='f',
                             required=True)
 
-    args_parse.add_argument('--range',
-                            help='диапазон заданий, который нужно обработать',
-                            metavar='n-n')
-
-    args_parse.add_argument('--one',
-                            help='задание, которое нужно обработать',
-                            metavar='n',
-                            type=int)
-
-    args_parse.add_argument('--exclude',
-                            help='задание, которое нужно исключить из обработки',
-                            metavar='n',
-                            type=int,
-                            nargs='+')
+    args_parse.add_argument(
+        '--exclude',
+        help='задание, которое нужно исключить из обработки',
+        metavar='n',
+        type=int,
+        nargs='+')
 
     args_parse.add_argument(
         '--exclude-range',
@@ -75,12 +67,6 @@ def args_parser():
 
     include = []
 
-    if args.one:
-        include.append(int(args.one))
-
-    if args.range:
-        include = extend_list(include, [args.range])
-
     if args.include:
         include.extend(args.include)
 
@@ -96,6 +82,7 @@ def args_parser():
             include.remove(item)
 
     # сортируем
+    # P.S. Не обязательно, можно убрать
     include.sort()
 
     return include, args.folder

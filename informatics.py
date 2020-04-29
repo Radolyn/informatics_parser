@@ -122,8 +122,17 @@ class Informatics(object):
         """
         return self.base_url + self.backend_route
 
-    def request_json(self, url: str, method: str = 'get', files: dict = None, data: dict = None):
-        result = self.session.request(method, self.backend_url + url, json=True, files=files, data=data, timeout=5)
+    def request_json(self,
+                     url: str,
+                     method: str = 'get',
+                     files: dict = None,
+                     data: dict = None):
+        result = self.session.request(method,
+                                      self.backend_url + url,
+                                      json=True,
+                                      files=files,
+                                      data=data,
+                                      timeout=5)
         if result is None:
             return {'code': 400, 'error': 'Something bad happened'}
 
@@ -184,9 +193,10 @@ class Informatics(object):
         :param status_id: Статус посылок
         :return: Первые 100 посылок
         """
-        result = self.request_json('problem/%i/filter-runs?problem_id=%i&user_id=%i&lang_id=%i&status_id=%i&count=100'
-                                   '&page=1' %
-                                   (problem_id, problem_id, user_id, self.language_id, status_id))
+        result = self.request_json(
+            'problem/%i/filter-runs?problem_id=%i&user_id=%i&lang_id=%i&status_id=%i&count=100'
+            '&page=1' %
+            (problem_id, problem_id, user_id, self.language_id, status_id))
 
         if result['code'] != 200:
             return {'code': result['code']}
@@ -302,9 +312,7 @@ class Informatics(object):
         problem['name'] = problem['full_name'].replace(
             'Задача №%i. ' % problem_id, '')
 
-        desc_tree = tree.find('div', {
-            'class': 'legend'
-        })
+        desc_tree = tree.find('div', {'class': 'legend'})
 
         # Эти ваши информатиксы меня совсем не впечатляют
         if desc_tree:
