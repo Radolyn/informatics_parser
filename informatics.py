@@ -98,7 +98,7 @@ class Informatics(object):
 
     def __init__(self):
         # Ссылка на сайт (с слешем на конце)
-        self.base_url = 'https://informatics.mccme.ru/'
+        self.base_url = 'https://old.informatics.mccme.ru/'
 
         # Сссылка на back-end (с слешем на конце)
         self.backend_route = 'py/'
